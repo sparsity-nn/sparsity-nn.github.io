@@ -13,11 +13,12 @@ layout: page
             <div class="paper_title">
                 <a href="{{ row.paper_url }}" target="_blank">{{ row.title }}</a>
             </div>
-            <div class="paper_venue">
-                {{ row.venue }}
-            </div>
             <div class="paper_author">
                 {{ row.author }}
+            </div>
+            <div class="paper_venue_year">{{ row.venue }}, {{ row.year }}</div>
+            <div class="paper_venue">
+                {{ row.venue }}
             </div>
             <div class="paper_year">
                 {{ row.year }}
@@ -45,8 +46,7 @@ layout: page
     }
 
     .paper_title {
-        float: left;
-        width: 90%;
+        margin: 0.25em 0.125em 0.25em 0.125em;
     }
 
     .paper_title a {
@@ -54,18 +54,20 @@ layout: page
         color: blue;
     }
 
+    .paper_venue_year{
+        margin: 0.25em 0.125em 0.25em 0.125em;
+    }
+
     .paper_venue{
-        font-size: 1.25em;
-        float: right;
-        width: 10%;
-        text-align: right;
+        display: none;
     }
 
     .paper_year {
-        display: none
+        display: none;
     }
 
     .paper_author {
+        margin: 0.25em 0.125em 0.25em 0.125em;
         color: grey;
         font-style: italic;
     }
@@ -83,6 +85,7 @@ layout: page
     var paper_list = $(".paper_row").get();
     paper_list.sort(sort_by_venue);
     paper_list.sort(sort_by_year);
+    paper_list.reverse();
 
     var curr_year = paper_list[0].getElementsByClassName("paper_year")[0].innerText
     paper_list[0].parentNode.appendChild($.parseHTML(`<div class="year_header">${curr_year}<hr></div>`)[0])
