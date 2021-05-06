@@ -5,55 +5,29 @@
 layout: page
 ---
 
+<script type="text/javascript" src="/js/jquery.min.js" ></script>
+
 <div>
-{% for conference_name in site.data.conference_list %}
-    <div class="conference_title">
-        {{ conference_name.title }}
-        <hr>
-    </div>
-    <div>
-        {% for row in site.data[conference_name.tag] %}
-            <div class="paper_row">
-                <div class="paper_header">
-                    <div class="paper_title">
-                        <a href="{{ row.paper_url }}" target="_blank">{{ row.title }}</a>
-                    </div>
-                    <div class="paper_year">({{ row.year }})</div>
-                </div>
-                <div class="paper_author">
-                    <i>{{ row.author }}</i>
-                </div>
-                <div class="paper_absact">
-                    {{ row.abstract }}
-                </div>
+    {% for row in site.data.papers %}
+        <div class="paper_row">
+            <div class="paper_title">
+                <a href="{{ row.paper_url }}" target="_blank">{{ row.title }}</a>
             </div>
-        {% endfor %}
-    </div>
-{% endfor %}
+            <div class="paper_venue">
+                {{ row.venue }}
+            </div>
+            <div class="paper_author">
+                {{ row.author }}
+            </div>
+            <div class="paper_year">
+                {{ row.year }}
+            </div>
+        </div>
+    {% endfor %}
 </div>
 
-<!-- <div>
-{% for conference_name in site.data.conference_list %}
-    <h1> {{ conference_name.title }} </h1>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Authors</th>
-            <th>Year</th>
-        </tr>
-        <tr>
-            {% for row in site.data[conference_name.tag] %}
-                <td><a href="{{ row.paper_url }}" target="_blank">{{ row.title }}</a></td>
-                <td>{{ row.author }}</td>
-                <td>{{ row.year }}</td>
-            {% endfor %}
-        </tr>
-    </table>
-{% endfor %}
-</div> -->
-
 <style type="text/css">
-    .conference_title {
+    .year_header {
         font-size: 2em;
         margin-top: 1.0em;
         margin-bottom: 0.5em;
@@ -70,14 +44,9 @@ layout: page
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     }
 
-    .paper_header {
-        margin: 0;
-    }
-
     .paper_title {
         float: left;
         width: 90%;
-        margin: 0;
     }
 
     .paper_title a {
@@ -85,19 +54,45 @@ layout: page
         color: blue;
     }
 
-    .paper_year {
+    .paper_venue{
         font-size: 1.25em;
         float: right;
         width: 10%;
-        margin: 0;
+        text-align: right;
+    }
+
+    .paper_year {
+        display: none
     }
 
     .paper_author {
         color: grey;
-        margin: 0;
-    }
-
-    .paper_absact {
-        text-align: justify
+        font-style: italic;
     }
 </style>
+
+<script type="text/javascript">
+    var sort_by_year = function(a, b) {
+        return a.getElementsByClassName("paper_year")[0].innerText.localeCompare(b.getElementsByClassName("paper_year")[0].innerText);
+    }
+
+    var sort_by_venue = function(a, b) {
+        return a.getElementsByClassName("paper_venue")[0].innerText.localeCompare(b.getElementsByClassName("paper_venue")[0].innerText);
+    }
+
+    var paper_list = $(".paper_row").get();
+    paper_list.sort(sort_by_venue);
+    paper_list.sort(sort_by_year);
+
+    var curr_year = paper_list[0].getElementsByClassName("paper_year")[0].innerText
+    paper_list[0].parentNode.appendChild($.parseHTML(`<div class="year_header">${curr_year}<hr></div>`)[0])
+    var prev_year = curr_year
+    for (var i = 0; i < paper_list.length; i++) {
+        curr_year = paper_list[i].getElementsByClassName("paper_year")[0].innerText
+        if (curr_year != prev_year) {
+            paper_list[i].parentNode.appendChild($.parseHTML(`<div class="year_header">${curr_year}<hr></div>`)[0])
+        }
+        paper_list[i].parentNode.appendChild(paper_list[i]);
+        prev_year = curr_year
+    }
+</script>

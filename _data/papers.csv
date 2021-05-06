@@ -1,0 +1,6 @@
+title,author,venue,year,paper_url
+"The lottery ticket hypothesis: Finding sparse, trainable neural networks","Jonathan Frankle, Michael Carbin",ICLR,2019,https://arxiv.org/abs/1803.03635
+Proving the lottery ticket hypothesis: Pruning is all you need,"Eran Malach, Gilad Yehudai, Shai Shalev-Schwartz, Ohad Shamir",ICML,2020,http://proceedings.mlr.press/v119/malach20a.html
+Linear Mode Connectivity and the Lottery Ticket Hypothesis,"Jonathan Frankle, Gintare Karolina Dziugaite, Daniel Roy, Michael Carbin",ICML,2020,http://proceedings.mlr.press/v119/frankle20a.html
+HYDRA: Pruning adversarially robust neural networks,"Vikash Sehwag, Shiqi Wang, Prateek Mittal, Suman Jana",NIPS,2020,https://arxiv.org/abs/1804.06216
+Logarithmic pruning is all you need,"Laurent Orseau, Marcus Hutter, Omar Rivasplata",NIPS,2020,https://arxiv.org/abs/2006.12156
